@@ -29,6 +29,7 @@ module "ec2" {
   instance_type = "t2.micro"
   subnet_id     = module.vpc.public_subnets[0]
   vpc_id        = module.vpc.vpc_id
+  iam_instance_profile = module.iam.ec2_profile
 }
 
 module "s3" {
@@ -36,21 +37,26 @@ module "s3" {
   bucket_name = "task1-v1"
 }
 
-module "dynamoDB" {
-  source        = "./modules/dynamoDB"
-  table_name    = "task1"
-  hash_key      = "id"
-  hash_key_type = "S"
-}
+# module "dynamoDB" {
+#   source        = "./modules/dynamoDB"
+#   table_name    = "task1"
+#   hash_key      = "id"
+#   hash_key_type = "S"
+# }
 
-module "rds" {
-  identifier        = "rds-taks1"
-  source            = "./modules/rds"
-  db_name           = "task1"
-  allocated_storage = 20
-  engine            = "mysql"
-  engine_version    = "8.0.40"
-  instance_class    = "db.t3.micro"
-  username          = "admin"
-  password          = "admin123"
+# module "rds" {
+#   identifier        = "rds-taks1"
+#   source            = "./modules/rds"
+#   db_name           = "task1"
+#   allocated_storage = 20
+#   engine            = "mysql"
+#   engine_version    = "8.0.40"
+#   instance_class    = "db.t3.micro"
+#   username          = "admin"
+#   password          = "admin123"
+# }
+
+module "iam" {
+  source = "./modules/iam"
+  bucket_arn = module.s3.bucket_arn
 }

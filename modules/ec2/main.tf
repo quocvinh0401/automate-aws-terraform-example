@@ -37,6 +37,7 @@ resource "aws_instance" "this" {
   subnet_id     = var.subnet_id
   #   key_name = ""
   vpc_security_group_ids = [aws_security_group.ec2-sg.id]
+  iam_instance_profile = var.iam_instance_profile
 
   tags = {
     Name = var.instance_name
