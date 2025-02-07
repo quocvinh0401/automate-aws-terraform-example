@@ -28,3 +28,9 @@ variable "iam_instance_profile" {
   type    = string
   default = ""
 }
+
+variable "key_name" {
+  type    = string
+  default = ""
+
+}

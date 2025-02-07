@@ -23,13 +23,14 @@ module "vpc" {
 }
 
 module "ec2" {
-  source        = "./modules/ec2"
-  ami           = "ami-0474ac020852b87a9"
-  instance_name = "task1"
-  instance_type = "t2.micro"
-  subnet_id     = module.vpc.public_subnets[0]
-  vpc_id        = module.vpc.vpc_id
+  source               = "./modules/ec2"
+  ami                  = "ami-0474ac020852b87a9"
+  instance_name        = "task1"
+  instance_type        = "t2.micro"
+  subnet_id            = module.vpc.public_subnets[0]
+  vpc_id               = module.vpc.vpc_id
   iam_instance_profile = module.iam.ec2_profile
+  key_name             = "task1_key"
 }
 
 module "s3" {
@@ -57,6 +58,6 @@ module "s3" {
 # }
 
 module "iam" {
-  source = "./modules/iam"
+  source     = "./modules/iam"
   bucket_arn = module.s3.bucket_arn
 }
